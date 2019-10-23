@@ -1,6 +1,7 @@
 package bmkg
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -8,7 +9,7 @@ import (
 
 const (
 	mockBaseURL  = "http://data.bmkg.go.id"
-	mockEndpoint = "/datamkg/MEWS/DigitalForecast/DigitalForecast-DIYogyakarta.xml"
+	mockEndpoint = "/datamkg/MEWS/DigitalForecast/DigitalForecast-%v.xml"
 )
 
 func TestGetWeatherForecast(t *testing.T) {
@@ -23,7 +24,8 @@ func TestGetWeatherForecast(t *testing.T) {
 	if err != nil {
 		t.Errorf("unexpected error in getMockResponse: %v", err)
 	}
-	testClient.On("GetXMLBytes", mockBaseURL+mockEndpoint).Return(string(mock), nil)
+	testClient.On("GetXMLBytes", mockBaseURL+fmt.Sprintf(mockEndpoint, "DIYogyakarta")).Return(mock, nil)
+	testClient.On("GetXMLBytes", mockBaseURL+fmt.Sprintf(mockEndpoint, "Dressrosa")).Return(nil, fmt.Errorf("data not found"))
 
 	res, err := bmkgService.GetWeatherForecast("DIYogyakarta")
 	if err != nil {
@@ -32,5 +34,10 @@ func TestGetWeatherForecast(t *testing.T) {
 
 	ass.Equal(res.Forecast.Area[0].Name, "Bantul")
 	ass.Equal(res.Forecast.Area[0].Parameter[0].Description, "Humidity")
+
+	res, err = bmkgService.GetWeatherForecast("Dressrosa")
+	ass.Nil(res)
+	ass.EqualError(err, "data not found")
+
 	testClient.AssertExpectations(t)
 }

@@ -60,6 +60,10 @@ func (c *client) GetXMLBytes(url string) ([]byte, error) {
 
 	defer res.Body.Close()
 
+	if res.StatusCode != http.StatusNotFound {
+		return nil, fmt.Errorf("data not found")
+	}
+
 	if res.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("error http bad request: %v", http.StatusBadRequest)
 	}
