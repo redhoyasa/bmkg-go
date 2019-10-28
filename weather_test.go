@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	mockBaseURL  = "http://data.bmkg.go.id"
-	mockEndpoint = "/datamkg/MEWS/DigitalForecast/DigitalForecast-%v.xml"
+	mockBaseURL         = "http://data.bmkg.go.id"
+	mockWeatherEndpoint = "/datamkg/MEWS/DigitalForecast/DigitalForecast-%v.xml"
 )
 
 func TestGetWeatherForecast(t *testing.T) {
@@ -24,8 +24,8 @@ func TestGetWeatherForecast(t *testing.T) {
 	if err != nil {
 		t.Errorf("unexpected error in getMockResponse: %v", err)
 	}
-	testClient.On("GetXMLBytes", mockBaseURL+fmt.Sprintf(mockEndpoint, "DIYogyakarta")).Return(mock, nil)
-	testClient.On("GetXMLBytes", mockBaseURL+fmt.Sprintf(mockEndpoint, "Dressrosa")).Return(nil, fmt.Errorf("data not found"))
+	testClient.On("GetXMLBytes", mockBaseURL+fmt.Sprintf(mockWeatherEndpoint, "DIYogyakarta")).Return(mock, nil)
+	testClient.On("GetXMLBytes", mockBaseURL+fmt.Sprintf(mockWeatherEndpoint, "Dressrosa")).Return(nil, fmt.Errorf("data not found"))
 
 	res, err := bmkgService.GetWeatherForecast("DIYogyakarta")
 	if err != nil {

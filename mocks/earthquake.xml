@@ -1,0 +1,15 @@
+<Infogempa>
+  <gempa>
+    <Tanggal>23-Oct-19</Tanggal>
+    <Jam>10:50:45 WIB</Jam>
+    <point>
+      <coordinates>138.47,-2.5</coordinates>
+    </point>
+    <Lintang>2.5 S</Lintang>
+    <Bujur>138.47 E</Bujur>
+    <Magnitude>5.1 Richter Scale</Magnitude>
+    <Kedalaman>10 Km</Kedalaman>
+    <_symbol>../imagesSWF/m2b.swf</_symbol>
+    <Wilayah>21 km SouthEast MAMBERAMOTENGAH-PAPUA</Wilayah>
+  </gempa>
+</Infogempa>
